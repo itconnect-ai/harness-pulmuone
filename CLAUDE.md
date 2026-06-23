@@ -30,7 +30,7 @@ During development, update `STATUS.md` at minimum when a Story starts, when test
 - Keep Server Components as the default. Add Client Components only for browser APIs, state, or event handlers.
 - Use Supabase through `@supabase/ssr` and `@supabase/supabase-js`.
 - Use `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for browser-safe Supabase access. Do not introduce legacy anon keys for new work.
-- Do not commit real secrets. Use `.env.local` locally and Vercel environment variables remotely.
+- Do not commit real secrets. Use `.env.local` for fast local development. Add the same required public env vars to Vercel only when deployment is being prepared.
 - Keep implementation changes scoped to the active Story.
 - Prefer simple, agent-legible modules over clever abstractions.
 
@@ -58,7 +58,9 @@ pnpm validate
 
 ## Vercel And Supabase
 
-Vercel is the deployment platform, so do not add GitHub Actions CI/CD by default. Supabase is the database and auth platform. Required public env vars:
+Vercel is the deployment platform, so do not add GitHub Actions CI/CD by default. Local development happens first with `.env.local`; Vercel environment variables are required when deployment is prepared. Supabase is the database and auth platform.
+
+Required local public env vars:
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
@@ -66,6 +68,8 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 ```
 
 If a future Story needs server-only Supabase operations, add the needed private env var to `.env.example` with an empty placeholder and document it in the Story.
+
+Before Vercel deployment, make sure the Vercel project has the same public Supabase variables registered for the intended environments. Do not read or print real secret values while checking this.
 
 ## Git Hygiene
 

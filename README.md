@@ -16,13 +16,14 @@ Claude Code에 입력할 프롬프트:
 내가 다음에 무엇을 입력해야 하는지도 알려줘.
 ```
 
-## 2. Supabase 준비
+## 2. Supabase 로컬 연결 준비
 
 사용자가 할 일:
 
 - Supabase 프로젝트를 만듭니다.
 - Project URL과 Publishable key를 확인합니다.
-- 로컬 `.env.local`과 Vercel 환경 변수에 아래 값을 넣습니다.
+- 로컬 개발을 위해 `.env.local`에 아래 값을 넣습니다.
+- Vercel 환경 변수는 아직 넣지 않아도 됩니다.
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
@@ -34,6 +35,7 @@ Claude Code에 입력할 프롬프트:
 ```text
 Supabase 연결 준비 상태를 확인해줘.
 실제 비밀값은 읽거나 출력하지 말고, 필요한 환경 변수 이름과 누락 여부만 알려줘.
+로컬 개발 기준으로만 확인하고, Vercel 환경 변수 설정은 배포 준비 단계까지 미뤄줘.
 ```
 
 ## 3. 제품 문서 작성
@@ -74,11 +76,12 @@ Claude Code가 해야 할 일:
 - 현재 상태를 `STATUS.md`에 기록합니다.
 - 사용자가 구현을 승인하기 전에는 개발을 시작하지 않습니다.
 
-## 5. 개발 시작
+## 5. 로컬 개발 시작
 
 사용자가 할 일:
 
 - Claude Code가 만든 계획을 읽고 구현을 시작할 Story를 승인합니다.
+- 개발은 로컬에서 빠르게 확인합니다.
 
 Claude Code에 입력할 프롬프트:
 
@@ -87,6 +90,7 @@ STATUS.md에 기록된 첫 번째 Story부터 개발을 시작해.
 Story 문서를 먼저 읽고, TDD 방식으로 진행해.
 진행 상황은 STATUS.md에 계속 기록해.
 필요한 검증은 네가 알아서 실행하고, 실패하면 원인을 고친 뒤 다시 확인해.
+기능 확인은 로컬 개발 환경 기준으로 진행해.
 ```
 
 ## 6. Story 완료 확인
@@ -119,6 +123,28 @@ Claude Code에 입력할 프롬프트:
 반복된 문제나 다음 Epic에서 조심할 점이 있으면 harness 문서에 반영해줘.
 ```
 
+## 8. Vercel 배포 준비
+
+사용자가 할 일:
+
+- 배포할 시점이 되면 Vercel에서 이 GitHub 저장소를 연결합니다.
+- Vercel Project Settings의 Environment Variables에 로컬과 같은 Supabase 값을 넣습니다.
+- Production, Preview, Development 중 필요한 Vercel 환경에 값을 적용합니다.
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+```
+
+Claude Code에 입력할 프롬프트:
+
+```text
+Vercel 배포 준비 상태를 확인해줘.
+로컬 .env.local 값은 읽거나 출력하지 말고,
+Vercel에 등록해야 할 환경 변수 이름과 배포 전 점검 항목만 정리해줘.
+Supabase DB 구조, RLS 정책, Auth 설정 중 배포 전에 확인해야 할 것도 함께 알려줘.
+```
+
 ## 개발 원칙
 
 - Claude Code만 사용합니다.
@@ -129,8 +155,10 @@ Claude Code에 입력할 프롬프트:
 - 구현은 TDD 방식으로 시작합니다.
 - 과도한 테스트는 만들지 않습니다.
 - Linting, formatting, typecheck, test, build는 Claude Code가 필요한 시점에 실행합니다.
+- 개발은 로컬에서 빠르게 진행하고, 배포할 때 Vercel을 사용합니다.
 - Vercel을 사용하므로 별도 GitHub Actions CI/CD는 기본으로 만들지 않습니다.
 - Supabase는 Publishable key 기반으로 연동하고, Secret key는 서버 전용으로만 다룹니다.
+- 로컬 개발에는 `.env.local`을 사용하고, Vercel 환경 변수는 배포 준비 단계에서 등록합니다.
 - 실제 비밀값은 파일에 커밋하지 않습니다.
 
 ## 문서 지도

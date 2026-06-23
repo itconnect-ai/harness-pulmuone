@@ -12,7 +12,7 @@ export async function proxy(request: NextRequest) {
 
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(config.url, config.anonKey, {
+  const supabase = createServerClient(config.url, config.publishableKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
@@ -31,7 +31,7 @@ export async function proxy(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getUser();
+  await supabase.auth.getClaims();
 
   return response;
 }

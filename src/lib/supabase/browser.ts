@@ -5,5 +5,5 @@ import { requireSupabaseConfig } from "@/lib/config/env";
 export function createClient() {
   const config = requireSupabaseConfig();
 
-  return createBrowserClient(config.url, config.anonKey);
+  return createBrowserClient(config.url, config.publishableKey);
 }

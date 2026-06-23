@@ -29,6 +29,7 @@ During development, update `STATUS.md` at minimum when a Story starts, when test
 - Use Next.js App Router with TypeScript.
 - Keep Server Components as the default. Add Client Components only for browser APIs, state, or event handlers.
 - Use Supabase through `@supabase/ssr` and `@supabase/supabase-js`.
+- Use `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for browser-safe Supabase access. Do not introduce legacy anon keys for new work.
 - Do not commit real secrets. Use `.env.local` locally and Vercel environment variables remotely.
 - Keep implementation changes scoped to the active Story.
 - Prefer simple, agent-legible modules over clever abstractions.
@@ -61,7 +62,7 @@ Vercel is the deployment platform, so do not add GitHub Actions CI/CD by default
 
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 ```
 
 If a future Story needs server-only Supabase operations, add the needed private env var to `.env.example` with an empty placeholder and document it in the Story.

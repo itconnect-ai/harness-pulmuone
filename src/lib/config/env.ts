@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const supabaseEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(20),
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(20),
 });
 
 type SupabaseEnv = z.infer<typeof supabaseEnvSchema>;
@@ -11,7 +11,7 @@ export type SupabaseConfigStatus =
   | {
       configured: true;
       url: string;
-      anonKey: string;
+      publishableKey: string;
       host: string;
     }
   | {
@@ -29,7 +29,7 @@ export function getSupabaseConfig(env: EnvMap = process.env): SupabaseConfigStat
     return {
       configured: true,
       url: parsed.data.NEXT_PUBLIC_SUPABASE_URL,
-      anonKey: parsed.data.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      publishableKey: parsed.data.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
       host: new URL(parsed.data.NEXT_PUBLIC_SUPABASE_URL).host,
     };
   }
@@ -44,7 +44,7 @@ export function getSupabaseConfig(env: EnvMap = process.env): SupabaseConfigStat
 
   for (const issue of parsed.error.issues) {
     const key = issue.path[0];
-    if (key === "NEXT_PUBLIC_SUPABASE_URL" || key === "NEXT_PUBLIC_SUPABASE_ANON_KEY") {
+    if (key === "NEXT_PUBLIC_SUPABASE_URL" || key === "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY") {
       missing.add(key);
     }
   }
@@ -53,7 +53,7 @@ export function getSupabaseConfig(env: EnvMap = process.env): SupabaseConfigStat
     configured: false,
     missing: Array.from(missing),
     message:
-      "Supabase is not configured yet. Add the public Supabase URL and anon key to .env.local and Vercel.",
+      "Supabase is not configured yet. Add the public Supabase URL and publishable key to .env.local and Vercel.",
   };
 }
 

@@ -9,7 +9,7 @@ describe("HarnessDashboard", () => {
       <HarnessDashboard
         supabase={{
           configured: false,
-          missing: ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_ANON_KEY"],
+          missing: ["NEXT_PUBLIC_SUPABASE_URL", "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"],
           message: "Supabase is not configured yet.",
         }}
       />,
@@ -26,7 +26,7 @@ describe("HarnessDashboard", () => {
         supabase={{
           configured: true,
           url: "https://example.supabase.co",
-          anonKey: "public-anon-key-with-enough-length",
+          publishableKey: "sb_publishable_key_with_enough_length",
           host: "example.supabase.co",
         }}
       />,
